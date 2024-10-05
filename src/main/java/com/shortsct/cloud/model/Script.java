@@ -5,9 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
-@Table(name = "drafts")
+@Data
+@Table(name = "drafts_neo")
 public class Script {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,19 +26,6 @@ public class Script {
 
     @Column(name = "password")
     private String password;
-
-    public Script(
-        String title,
-        String url,
-        String email,
-        String password
-    ) {
-        super();
-        this.title = title;
-        this.url = url;
-        this.email = email;
-        this.password  = password;
-    }
 
     public Long getId() {
         return id;

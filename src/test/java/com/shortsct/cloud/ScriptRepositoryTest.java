@@ -22,7 +22,7 @@ public class ScriptRepositoryTest {
 
     @Test
     public void testSaveAndFindScript() {
-        Script script = new Script("Typical Script", "http://www.example.com", "lala@slime.com", "12345");
+        Script script = new Script();
         // Mock the save method
         when(scriptsRepository.save(script)).thenReturn(script);
         // Mock the findById method

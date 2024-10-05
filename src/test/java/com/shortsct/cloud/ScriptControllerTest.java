@@ -48,7 +48,7 @@ public class ScriptControllerTest {
 
     @Test
     public void testCreateDraft() throws Exception {
-        Script script = new Script("Typical Script", "http://www.example.com", "lala@snail.com", "12345");
+        Script script = new Script();
         when(scriptsRepository.save(script)).thenReturn(script);
         when(scriptsRepository.findById(script.getId())).thenReturn(java.util.Optional.of(script));
         mockMvc.perform(post("/api/v1/drafts")
@@ -60,7 +60,7 @@ public class ScriptControllerTest {
 
     @Test
     public void testDeleteDraft() throws Exception {
-        Script script = new Script("Typical Script", "http://www.example.com", "lala@snail.com", "12345");
+        Script script = new Script();
         when(scriptsRepository.save(script)).thenReturn(script);
         scriptsRepository.save(script);
         mockMvc.perform(post("/api/v1/drafts" + 1))

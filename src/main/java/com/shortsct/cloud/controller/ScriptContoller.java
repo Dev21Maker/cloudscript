@@ -21,21 +21,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shortsct.cloud.repository.ScriptsRepository;
 
+
 @CrossOrigin()
 @RestController
 @RequestMapping("/api/v1")
 public class ScriptContoller {
     @Autowired
     private ScriptsRepository scriptsRepository;
+
+    @GetMapping("/")
+    private String testConnection() {
+        return "Alright";
+    }
+
     
     @GetMapping("/drafts")
     public List<Script> getAllScripts() {
-        return scriptsRepository.findAll();
+        List<Script> scripts = scriptsRepository.findAll();
+        if (scripts.isEmpty()) {
+            throw new ResourceNotFoundException("No scripts found");
+        }
+        return scripts;
     }
 
     @PostMapping("/drafts")
-    public Script createDraft(@RequestBody Script script) {
-        return scriptsRepository.save(script);
+    public ResponseEntity<Script> createDraft(@RequestBody Script script) {
+        Script savedScript = scriptsRepository.save(script);
+        return ResponseEntity.ok(savedScript);
     }
 
     @GetMapping("/drafts/{id}")
@@ -47,6 +59,7 @@ public class ScriptContoller {
 
     @PutMapping("/drafts/{id}")
     public ResponseEntity<Script> updateScript(@PathVariable Long id, @RequestBody Script scriptDetail) {
+        System.out.println(id);
         Script script = scriptsRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Script not found with id: " + id));
         script.setTitle(scriptDetail.getTitle());
